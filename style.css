@@ -1,4 +1,4 @@
-/* Make the whole page background black */
+/* Making the whole page background black */
 body {
   background-color: #000; /* black */
   color: white; /* white text */
@@ -16,7 +16,7 @@ body {
   width: 350px;
 }
 
-/* Input box styling */
+/* Inputing box styling */
 input#taskInput {
   width: 100%;
   padding: 10px;
