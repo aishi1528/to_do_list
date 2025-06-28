@@ -1,6 +1,7 @@
 const taskInput = document.getElementById("taskInput");
 const taskList = document.getElementById("taskList");
 
+// Adding a task to the list
 function addTask(text = null) {
   const taskText = text || taskInput.value.trim();
   if (!taskText) return;
@@ -15,27 +16,28 @@ function addTask(text = null) {
   taskInput.value = "";
 }
 
+// Deleting a task
 function deleteTask(button) {
   button.parentElement.remove();
   saveTasks();
 }
 
+// Saving tasks to local storage
 function saveTasks() {
-  const tasks = [];
-  taskList.querySelectorAll("li span").forEach(span => {
-    tasks.push(span.textContent);
-  });
+  const tasks = Array.from(taskList.querySelectorAll("li span")).map(span => span.textContent);
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+// Loading tasks from local storage
 function loadTasks() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   tasks.forEach(task => addTask(task));
 }
 
+// Using speech recognition to add a task
 function startListening() {
   if (!('webkitSpeechRecognition' in window)) {
-    alert("Speech recognition not supported");
+    alert("Speech recognition not supported in this browser.");
     return;
   }
 
@@ -45,7 +47,12 @@ function startListening() {
     const transcript = event.results[0][0].transcript;
     addTask(transcript);
   };
+  recognition.onerror = function () {
+    alert("Error during speech recognition. Try again.");
+  };
   recognition.start();
 }
 
+// Loading tasks on page load
 window.onload = loadTasks;
+
